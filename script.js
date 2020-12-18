@@ -2,15 +2,24 @@ const sayHello = () => {
     console.log('Hello!')
 }
 
-const TIME = 1000 // ms
+const debounce = (time) => {
+    return (fn) => {
+        let timeoutId
+        return () => {
+            if (timeoutId) clearTimeout(timeoutId)
 
-let timeoutId
+            timeoutId = setTimeout(
+                fn,
+                time
+            )
+        }
+    }
+}
+
+const debounce1s = debounce(1000)
+
+const seyHelloDebounced = debounce1s(sayHello)
 
 for (let i = 0; i < 100; i++) {
-    if(timeoutId) clearTimeout(timeoutId)
-
-    timeoutId = setTimeout(
-        sayHello,
-        TIME
-    )
+    seyHelloDebounced()
 }
