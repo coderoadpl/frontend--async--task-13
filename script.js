@@ -1,6 +1,6 @@
-const sayHello = function (name) {
+const sayHello = function (name, lastName) {
     const suffix = this.helloSuffix || '!'
-    console.log('Hello ' + name + suffix)
+    console.log('Hello ' + name + ' ' + lastName + suffix)
 }
 
 const debounce = (time) => {
@@ -9,10 +9,9 @@ const debounce = (time) => {
         return function (...args) {
             if (timeoutId) clearTimeout(timeoutId)
 
-            timeoutId = setTimeout(
-                () => fn.call(this, ...args),
-                time
-            )
+            const fnBound = fn.bind(this, ...args)
+
+            timeoutId = setTimeout(fnBound, time)
         }
     }
 }
@@ -22,7 +21,7 @@ const debounce1s = debounce(1000)
 const seyHelloDebounced = debounce1s(sayHello)
 
 for (let i = 0; i < 100; i++) {
-    seyHelloDebounced('Mateusz')
+    seyHelloDebounced('Code', 'Road')
 }
 
 const context = {
@@ -31,5 +30,5 @@ const context = {
 }
 
 for (let i = 0; i < 100; i++) {
-    context.sayHello('Mateusz')
+    context.sayHello('Code', 'Road')
 }
